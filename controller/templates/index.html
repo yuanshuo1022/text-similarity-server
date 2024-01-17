@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文本相似度计算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select, textarea {
+            width: 45%; /* 调整宽度为 45% */
+            padding: 10px;
+            margin: 10px 10px 10px 0; /* 添加右侧间距 */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            display: inline-block; /* 内联块元素，让元素水平排列 */
+        }
+
+        select {
+            width: auto; /* 让下拉选择框自动调整宽度 */
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            display: block; /* 设置为块元素，让按钮独占一行 */
+            margin: 0 auto; /* 水平居中 */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .container {
+            text-align: center; /* 文本居中对齐 */
+        }
+    </style>
+</head>
+<body>
+    <h1>文本相似度计算demo</h1>
+    <form action="/calculate_similarity" method="POST">
+        <div class="container"> <!-- 使用容器包裹元素 -->
+            <label for="algorithm">选择算法:</label>
+            <select name="algorithm">
+                <option value="1">平均向量</option>
+                <option value="2">TF-IDF</option>
+            </select>
+        </div>
+        <div class="container"> <!-- 使用容器包裹元素 -->
+            <label for="text1">请输入文本1:</label>
+            <textarea name="text1" rows="4" cols="50"></textarea>
+        </div>
+        <div class="container"> <!-- 使用容器包裹元素 -->
+            <label for="text2">请输入文本2:</label>
+            <textarea name="text2" rows="4" cols="50"></textarea>
+        </div>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>
