@@ -14,7 +14,7 @@ def clean_text_route():
         mode = int(data.get('mode'))
         print(f"mode: {mode}\ntext: {input_text}")
         if not input_text:
-            return jsonify({'error': '无效输入'})
+            return jsonify({'code': 301, 'error': '无效输入'})
         if mode == 1:
             cleaned_text = TextCleanServer.clean_text_cn(input_text)
         elif mode == 2:
@@ -22,10 +22,10 @@ def clean_text_route():
         elif mode == 3:
             cleaned_text = TextCleanServer.clean_text_cn_en_num(input_text)
         else:
-            return jsonify({'error': "请切换模式"})
-        return jsonify({'cleaned_text': cleaned_text})
+            return jsonify({'code': 302, 'error': "请切换模式"})
+        return jsonify({'code': 200, 'cleaned_text': cleaned_text})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'code': 300, 'error': str(e)})
 
 
 @train_route.route('/api/split-word', methods=['POST'])
@@ -36,14 +36,14 @@ def split_word_route():
         mode = int(data.get('split_word_mode'))
 
         if not input_text:
-            return jsonify({'error': '无效输入'})
+            return jsonify({'code': 301, 'error': '无效输入'})
         if mode == 1:
             split_text = SplitWord.jieba_split_word(input_text)
         elif mode == 2:
             split_text = SplitWord.spacy_split_word(input_text)
         else:
-            return jsonify({'error': "请切换模式"})
-        return jsonify({'split_text': split_text})
+            return jsonify({'code': 302, 'error': "请切换模式"})
+        return jsonify({'code': 200, 'split_text': split_text})
     except Exception as e:
         return jsonify({'error': str(e)})
 
@@ -55,10 +55,10 @@ def simple_convert_route():
         input_text = data.get('text')
 
         if not input_text:
-            return jsonify({'error': '无效输入'})
+            return jsonify({'code': 301, 'error': '无效输入'})
         converter = ConverterSimple()
         simple_text = converter.convert_simple_chinese(input_text)
 
-        return jsonify({'simple_text': simple_text})
+        return jsonify({'code': 200, 'simple_text': simple_text})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'code': 300, 'error': str(e)})

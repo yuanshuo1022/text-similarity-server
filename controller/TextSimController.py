@@ -48,10 +48,10 @@ def calculate_similarity():
         correlation_sim = SimilarityServer.correlation_similarity(vec1, vec2)
 
         # 返回 JSON 数据
-        return jsonify({'cosine_sim': float(cosine_sim), 'correlation_sim': float(correlation_sim)})
+        return jsonify({'code': 200, 'cosine_sim': float(cosine_sim), 'correlation_sim': float(correlation_sim)})
     except Exception as e:
         # 处理异常情况
-        return jsonify({'error': str(e)})
+        return jsonify({'code': 300, 'error': str(e)})
 
 
 @similarity_route.route('/api/word-similarity', methods=['POST'])
@@ -60,6 +60,6 @@ def word_similarity():
         data = request.get_json()
         words = data.get('words')
         similar_word = WordAnalyse.word_similar(model, words)
-        return jsonify({'similar_word': similar_word})
+        return jsonify({'code': 200, 'similar_word': similar_word})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return jsonify({'code': 300, 'error': str(e)})
