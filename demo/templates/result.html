@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>文本相似度计算</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+            padding: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin: 10px;
+        }
+
+        a {
+            display: block;
+            font-size: 18px;
+            color: #007bff;
+            text-decoration: none;
+            margin: 20px;
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>文本相似度计算结果</h1>
+    <p>余弦相似度: {{ cosine_sim*100 }} %</p>
+    <p>相关系数相似度: {{ correlation_sim*100 }} %</p>
+    <a href="/">返回</a>
+</body>
+</html>
