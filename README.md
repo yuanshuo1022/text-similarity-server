@@ -1,31 +1,45 @@
 # text-similarity-server
 基于词向量的文本相似度分析--后端
 
-```
-text-similarity-server
+``````
+下载依赖：
+pip install
 
-```
-```
-text-similarity-server
+基本依赖项：
+opencc
+jieba
+woed2Vec
+······
+```````
+demo使用：
+````````
+下载数据（.xml.bz2文件随意选择）
+链接 ：https://dumps.wikimedia.org/zhwiki/latest/
 
-```
-```
-text-similarity-server
+数据抽取（无需解压.xml.bz2文件）
+python wiki_process.py zhwiki-latest-pages-articles.xml.bz2 zhwiki-latest.txt
+````````
+``````
+繁体转简体:
+https://github.com/yuanshuo1022/text-similarity-server/blob/master/demo/chinese_simple.py
 
-```
-```
-text-similarity-server
+清洗预料：
+https://github.com/yuanshuo1022/text-similarity-server/blob/master/demo/clean_corpus.py
 
-```
-```
-text-similarity-server
+模型训练：
+https://github.com/yuanshuo1022/text-similarity-server/blob/master/demo/wordModel.py
 
-```
-```
-text-similarity-server
+可视化：
+https://github.com/yuanshuo1022/text-similarity-server/blob/master/demo/WordCloud_visualization.py
+https://github.com/yuanshuo1022/text-similarity-server/blob/master/demo/wiki_word2vec_visualization.py
+``````
 
-```
-```
-text-similarity-server
+web应用启动使用：
+``````
+安装flask框架
+pip install 
+注：flask-cors如果安装不上这在pycharm中设置：file-setting-Project-python Interpreter中找到对应依赖添加
 
-```
+启动应用
+python main.py
+``````
