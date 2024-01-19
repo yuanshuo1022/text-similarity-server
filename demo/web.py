@@ -1,4 +1,6 @@
-from flask import Flask, request, render_template
+# from flask import Flask, request, render_template
+from flask import Flask, request, jsonify, make_response
+from flask_cors import *
 from sklearn.metrics.pairwise import cosine_similarity
 import gensim
 from gensim.models.word2vec import PathLineSentences
@@ -7,10 +9,11 @@ import numpy as np
 import jieba
 from datasketch import MinHash, MinHashLSH
 
-app = Flask(__name__)
 
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
 # 载入Word2Vec 模型
-model = gensim.models.Word2Vec.load("D:/code/python/历史模型/215M/word2vec.model")
+model = gensim.models.Word2Vec.load("../model/one.model")
 
 
 
@@ -75,35 +78,43 @@ def lsh_similarity(text1, text2, lsh):
     return len(result) / len(text1_tokens)
 
 # 主页路由
-@app.route('/')
-def home():
-    return render_template('index.html')
+# @app.route('/')
+# def home():
+#     return render_template('index.html')
 
 # 计算相似度的路由
-@app.route('/calculate_similarity', methods=['POST'])
+@app.route('/api/analyze-similarity', methods=['POST'])
 def calculate_similarity():
-    algorithm = request.form['algorithm']
-    text1 = request.form['text1']
-    text2 = request.form['text2']
-    print(algorithm)
-    if algorithm == 1:
-    # 平均向量计算
-        vec1 = text_to_average_vector(text1, model)
-        vec2 = text_to_average_vector(text2, model)
-    #TF-IDF
-    # 使用 TF-IDF 向量化文本
-    else:
-        tfidf_vectorizer = TfidfVectorizer()
-        tfidf_vectorizer.fit([text1, text2])
-         # tfidf_matrix = tfidf_vectorizer.fit_transform(text1)
-         # 获取单词到 TF-IDF 权重的映射
-        word2tfidf = dict(zip(tfidf_vectorizer.get_feature_names_out(), tfidf_vectorizer.idf_))
-        vec1 = sentence_vector(text1, model, word2tfidf)
-        vec2 = sentence_vector(text2, model, word2tfidf)
-        print(vec1)
-    cosine_sim = cosine_similarity([vec1], [vec2])[0][0]
-    correlation_sim = correlation_similarity(vec1, vec2)
-    return render_template('result.html', cosine_sim=cosine_sim, correlation_sim=correlation_sim)
 
+    try:
+        # algorithm = request.form['algorithm']
+        data = request.get_json()
+        text_vector = int(data.get('textVector'))
+        text1 = data.get('text1')
+        text2 = data.get('text2')
+
+        if text_vector == 1:
+            # 平均向量计算
+            vec1 = text_to_average_vector(text1, model)
+            vec2 = text_to_average_vector(text2, model)
+        else:
+            # 使用 TF-IDF 向量化文本
+            tfidf_vectorizer = TfidfVectorizer()
+            tfidf_vectorizer.fit([text1, text2])
+
+            # 获取单词到 TF-IDF 权重的映射
+            word2tfidf = dict(zip(tfidf_vectorizer.get_feature_names_out(), tfidf_vectorizer.idf_))
+            vec1 = sentence_vector(text1, model, word2tfidf)
+            vec2 = sentence_vector(text2, model, word2tfidf)
+            print(vec1)
+
+        cosine_sim = cosine_similarity([vec1], [vec2])[0][0]
+        correlation_sim = correlation_similarity(vec1, vec2)
+
+        # 返回 JSON 数据
+        return jsonify({'cosine_sim': float(cosine_sim), 'correlation_sim': float(correlation_sim)})
+    except Exception as e:
+        # 处理异常情况
+        return jsonify({'error': str(e)})
 if __name__ == '__main__':
     app.run(debug=True)

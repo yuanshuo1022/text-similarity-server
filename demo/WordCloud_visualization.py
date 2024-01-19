@@ -92,9 +92,9 @@ def draw_word_frequency_bar(word_cloud):
 def test():
     logging.basicConfig(format="%(asctime)s:%(levelname)s:%(message)s", level=logging.INFO)
     #加载模型
-    model = models.Word2Vec.load("D:/code/py/similarity/model/one.model")
+    model = models.Word2Vec.load("../model/one.model")
     # 输入一个词找出相似的前100个词
-    one_corpus = ["六"]
+    one_corpus = ["帅"]
     result = model.wv.most_similar(one_corpus[0], topn=100)
     # 将返回的结果转换为字典,便于绘制词云
     word_cloud = dict()

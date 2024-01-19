@@ -22,7 +22,7 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 # wiki_news = open('./data/reduce_zhiwiki.txt', 'r',encoding='utf-8')
 # model = Word2Vec(LineSentence(wiki_news), sg=0,size=200, window=10, min_count=500, workers=6)
 # print('model训练完成')
-model = Word2Vec.load("D:/code/python/历史模型/2.2G100w/word2vec2p2G.model")
+model = Word2Vec.load("../model/one.model")
 import numpy as np  # Import NumPy
 
 def tsne_plot(model, num_words=100):
@@ -57,5 +57,5 @@ def tsne_plot(model, num_words=100):
                      va='bottom')
     plt.show()
 
-tsne_plot(model, num_words=3500)
+tsne_plot(model, num_words=500)
 

@@ -2,7 +2,7 @@
 from gensim.models import Word2Vec
 
 # 加载训练好的Word2Vec模型
-model = Word2Vec.load("D:/code/python/历史模型/215M/word2vec.model")
+model = Word2Vec.load("../model/one.model")
 
 # 选择一些种子词
 seed_words = ["国王", "男人", "女人", "女王"]

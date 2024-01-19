@@ -1,16 +1,17 @@
-# This is a sample Python script.
+from flask import Flask
+from flask_cors import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+from controller.TextSimController import similarity_route
+from controller.TrainController import train_route
 
 
-# Press the green button in the gutter to run the script.
+
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+
+
+app.register_blueprint(train_route)
+app.register_blueprint(similarity_route)
+# 载入Word2Vec 模型
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run(port=5000)

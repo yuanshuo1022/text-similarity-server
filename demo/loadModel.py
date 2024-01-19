@@ -58,7 +58,7 @@ def lsh_similarity(text1, text2, lsh):
     return len(result)/len(text1_tokens)
 
 # 选择两个文本示例
-text1 = "讨厌"
+text1 = "喜欢"
 text2 = "喜欢。"
 
 # 计算平均向量
