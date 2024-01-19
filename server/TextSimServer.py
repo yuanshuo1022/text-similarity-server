@@ -2,6 +2,7 @@ import numpy as np
 import jieba
 from datasketch import MinHash, MinHashLSH
 
+
 class SimilarityServer:
     # 计算句子向量
     def sentence_vector(sentence, word2vec_model, word2tfidf):
@@ -16,7 +17,7 @@ class SimilarityServer:
                 sentence_vec += word_vec * tfidf_weight
                 total_weight += tfidf_weight
         if total_weight == 0:
-            return sentence_vec / (total_weight+0.001)  # 避免除以零
+            return sentence_vec / (total_weight + 0.001)  # 避免除以零
         return sentence_vec / total_weight
 
     # 定义将文本转化为平均向量的函数

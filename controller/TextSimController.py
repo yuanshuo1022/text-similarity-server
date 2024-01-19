@@ -1,13 +1,13 @@
-
-from flask import Flask, request, jsonify, make_response,Blueprint
+from flask import Flask, request, jsonify, make_response, Blueprint
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from server.TextSimServer import SimilarityServer
-from server.CleanTextServer import TextCleanServer
+from server.WordAnalyseServer import WordAnalyse
 import gensim
 from gensim.models.word2vec import PathLineSentences
 
 import os
+
 similarity_route = Blueprint('similarity_route', __name__)
 
 # 获取当前脚本所在的目录
@@ -19,9 +19,9 @@ model_path = os.path.join(parent_dir, 'model', 'one.model')
 # 加载 Word2Vec 模型
 model = gensim.models.Word2Vec.load(model_path)
 
+
 @similarity_route.route('/api/analyze-similarity', methods=['POST'])
 def calculate_similarity():
-
     try:
         # algorithm = request.form['algorithm']
         data = request.get_json()
@@ -54,3 +54,12 @@ def calculate_similarity():
         return jsonify({'error': str(e)})
 
 
+@similarity_route.route('/api/word-similarity', methods=['POST'])
+def word_similarity():
+    try:
+        data = request.get_json()
+        words = data.get('words')
+        similar_word = WordAnalyse.word_similar(model, words)
+        return jsonify({'similar_word': similar_word})
+    except Exception as e:
+        return jsonify({'error': str(e)})
