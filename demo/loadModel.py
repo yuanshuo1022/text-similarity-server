@@ -12,8 +12,9 @@ model = gensim.models.Word2Vec.load("../model/one.model")
 similar_words = model.wv.most_similar('可爱', topn=20)
 for word, score in similar_words:
     print(f'{word}: {score}')
-print(model.wv["欢喜"])
-print(model.wv["热爱"])
+print(model.wv["欢喜"][:3])
+
+# print(model.wv["热爱"])
 # 定义函数将文本转化为平均向量
 def text_to_average_vector(text, model):
     words = jieba.lcut(text)
