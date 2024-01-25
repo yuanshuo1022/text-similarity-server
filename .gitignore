@@ -42,3 +42,10 @@ model/**
 text/*
 model/*
 .history
+
+/服务器/*
+服务器/**/*
+
+.idea/*
+
+服务器

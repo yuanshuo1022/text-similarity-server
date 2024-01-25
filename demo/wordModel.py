@@ -12,7 +12,7 @@ from sklearn.metrics.pairwise import pairwise_distances
 from sklearn.preprocessing import MinMaxScaler
 from datasketch import MinHash, MinHashLSH
 # 定义文件目录
-input_dir = Path("D:/code/py/similarity/text")  #文本文件的目录路径
+input_dir = Path("E:/graduationPro/server/text-similarity-server/text/")  #文本文件的目录路径
 
 # 训练Word2Vec模型
 model = gensim.models.Word2Vec(vector_size=100, window=8, min_count=3, sg=0)

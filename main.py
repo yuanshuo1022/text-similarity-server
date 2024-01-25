@@ -5,19 +5,28 @@ from controller.TextSimController import similarity_route
 from controller.TrainController import train_route
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app)
 
-# 定义允许访问的IP白名单
-allowed_ips = ['127.0.0.1', '192.168.1.4']  # '127.0.0.1', '192.168.1.1'
-
-
-# 在每个请求之前执行的拦截器
+# # 定义允许访问的IP白名单
+# allowed_ips = ['127.0.0.1', '192.168.1.4']  # '127.0.0.1', '192.168.1.1'
+#
+#
+# # 在每个请求之前执行的拦截器
 @app.before_request
 def before_request():
+    if request.method == 'OPTIONS':
+        # 处理 OPTIONS 请求并返回正确的 CORS 头信息
+        response = app.make_default_options_response()
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        response.headers[
+            'Access-Control-Allow-Headers'] = 'DNT,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,x-web-server-auth'
+        response.headers['Access-Control-Expose-Headers'] = 'Content-Length,Content-Range'
+        return response
     client_ip = request.remote_addr
     print("request.remote_addr: " + request.remote_addr)
-    if client_ip not in allowed_ips:
-        abort(403)
+    # if client_ip not in allowed_ips:
+    #     abort(403)
 
 
 app.register_blueprint(train_route)
