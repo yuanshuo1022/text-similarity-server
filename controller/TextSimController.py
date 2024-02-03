@@ -58,8 +58,22 @@ def calculate_similarity():
 def word_similarity():
     try:
         data = request.get_json()
-        words = data.get('words')
-        similar_word = WordAnalyse.word_similar(model, words)
+        words = data.get('singleWord')
+        sums = data.get('sum')
+        similar_word = WordAnalyse.word_similar(model, words, sums)
         return jsonify({'code': 200, 'similar_word': similar_word})
+    except Exception as e:
+        return jsonify({'code': 300, 'error': str(e)})
+
+
+@similarity_route.route('/api/inferenceWord', methods=['POST'])
+def word_inference_word():
+    try:
+        data = request.get_json()
+        words1 = data.get('inferenceWord')
+        words2 = data.get('inferencedWord')
+        words3 = data.get('willInferenceWord')
+        inference_words = WordAnalyse.inference_word(words1, words2, words3, model)
+        return jsonify({'code': 200, 'inference_words': inference_words})
     except Exception as e:
         return jsonify({'code': 300, 'error': str(e)})
